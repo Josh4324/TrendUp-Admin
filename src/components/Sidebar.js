@@ -75,22 +75,22 @@ export default function Sidebar() {
               <div className="collapse" id="articlesNav">
                 <ul className="nav sub-menu">
                   <li className="nav-item">
-                    <a href="posts.html" className="nav-link">
+                    <a href="/posts" className="nav-link">
                       All Posts
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a href="posts_public.html" className="nav-link">
+                    <a href="/posts-public" className="nav-link">
                       Public Posts
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a href="posts_private.html" className="nav-link">
+                    <a href="posts-private" className="nav-link">
                       Private Posts
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a href="posts_deleted.html" className="nav-link">
+                    <a href="posts-deleted" className="nav-link">
                       Deleted Posts
                     </a>
                   </li>
@@ -100,13 +100,13 @@ export default function Sidebar() {
 
             <li className="nav-item nav-category">Finance</li>
             <li className="nav-item">
-              <a href="transactions.html" className="nav-link">
+              <a href="/transactions" className="nav-link">
                 <i className="link-icon" data-feather="trending-up"></i>
                 <span className="link-title">Transactions</span>
               </a>
             </li>
             <li className="nav-item">
-              <a href="payout.html" className="nav-link">
+              <a href="/payout" className="nav-link">
                 <i className="link-icon" data-feather="arrow-up-right"></i>
                 <span className="link-title">Payout</span>
               </a>
