@@ -1,9 +1,17 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import "../community.css";
 import "../style.css";
 
-export default function Sidebar() {
+function Sidebar(props) {
+  const history = useHistory();
+  const logout = () => {
+    localStorage.removeItem("trend-user");
+    props.dispatch({ type: "LOGIN_FAILURE" });
+    window.location.href = "/login";
+    history.push("/login");
+  };
   return (
     <div>
       <nav className="sidebar">
@@ -114,11 +122,11 @@ export default function Sidebar() {
 
             <li className="nav-item nav-category">Account</li>
 
-            <li className="nav-item">
-              <a href="logout.html" className="nav-link">
+            <li className="nav-item" style={{ cursor: "pointer" }}>
+              <span onClick={logout} className="nav-link">
                 <i className="link-icon" data-feather="log-out"></i>
                 <span className="link-title">Sign Out</span>
-              </a>
+              </span>
             </li>
           </ul>
         </div>
@@ -126,3 +134,12 @@ export default function Sidebar() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth,
+    data: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Sidebar);

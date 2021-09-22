@@ -16,23 +16,33 @@ import PrivatePost from "./pages/PrivatePost";
 import DeletedPost from "./pages/DeletedPost";
 import Transactions from "./pages/Transactions";
 import Payout from "./pages/Payout";
+import Login from "./pages/Login";
+import PrivateRoute from "./pages/PrivateRoute";
 
 function App(props) {
+  const user = props.user.user;
+  console.log(user);
   return (
-    <div className="App color-theme-blue">
+    <div className="">
       <Router>
         <Switch>
-          <Route path="/" exact component={Dashboard} />
-          <Route path="/users" exact component={Users} />
-          <Route path="/creators" exact component={Creators} />
-          <Route path="/supporters" exact component={Supporters} />
-          <Route path="/blocked" exact component={Blocked} />
-          <Route path="/posts" exact component={Posts} />
-          <Route path="/posts-public" exact component={PublicPost} />
-          <Route path="/posts-private" exact component={PrivatePost} />
-          <Route path="/posts-deleted" exact component={DeletedPost} />
-          <Route path="/transactions" exact component={Transactions} />
-          <Route path="/payout" exact component={Payout} />
+          <Route path="/login">
+            {user === null ? <Login /> : <Dashboard />}
+          </Route>
+
+          <PrivateRoute exact path="/" component={Dashboard} />
+          <PrivateRoute exact path="/users" component={Users} />
+          <PrivateRoute exact path="/creators" component={Creators} />
+          <PrivateRoute exact path="/supporters" component={Supporters} />
+          <PrivateRoute exact path="/bocked" component={Blocked} />
+          <PrivateRoute exact path="/posts" component={Posts} />
+
+          <PrivateRoute exact path="/posts-public" component={PublicPost} />
+          <PrivateRoute exact path="/posts-private" component={PrivatePost} />
+          <PrivateRoute exact path="/posts-deleted" component={DeletedPost} />
+
+          <PrivateRoute exact path="/transactions" component={Transactions} />
+          <PrivateRoute exact path="/payout" component={Payout} />
         </Switch>
         <NotificationContainer />
       </Router>

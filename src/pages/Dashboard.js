@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
+import { getCreators } from "../utils/apiCalls";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/common/Footer";
 import { useHistory } from "react-router-dom";
@@ -9,7 +10,21 @@ import "../community.css";
 import "../style.css";
 
 function Dashboard(props) {
-  let history = useHistory();
+  const token = props.user.user.token;
+  const [creators, setCreators] = useState([]);
+  const [numCreators, setNumCreators] = useState(0);
+
+  useEffect(() => {
+    const run = async () => {
+      const result = await getCreators(token);
+      let newCreators = result.slice(0, 10);
+      setCreators(newCreators);
+      setNumCreators(result.length);
+    };
+
+    run();
+    return () => {};
+  }, []);
   return (
     <div className="sidebar-dark">
       <div className="main-wrapper">
@@ -34,7 +49,7 @@ function Dashboard(props) {
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-start mb-2">
                       <h6 className="card-title mb-0">Creators</h6>
-                      <h3 className="mb-4">3,897</h3>
+                      <h3 className="mb-4">{numCreators}</h3>
                     </div>
 
                     <div className="monthly-sales-chart-wrapper">
