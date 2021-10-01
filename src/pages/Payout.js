@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/common/Footer";
+import { connect } from "react-redux";
+import { NotificationManager } from "react-notifications";
+import { getAllPayouts } from "../utils/apiCalls";
 
-export default function Payout() {
+function Payout(props) {
+  const token = props.user.user.token;
+  const [payout, setPayouts] = useState([]);
+
+  useEffect(() => {
+    const run = async () => {
+      const result = await getAllPayouts(token);
+      console.log(result);
+      setPayouts(result);
+    };
+
+    run();
+    return () => {};
+  }, []);
   return (
     <div>
       <div class="sidebar-dark">
@@ -79,54 +95,21 @@ export default function Payout() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>
-                                <a href="creator-profile.html">Tope Agboola</a>
-                              </td>
-                              <td>₦500</td>
-                              <td>January 07, 2021 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>
-                                <a href="creator-profile.html">Tope Agboola</a>
-                              </td>
-                              <td>₦500</td>
-                              <td>January 07, 2021 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>3</td>
-                              <td>
-                                <a href="creator-profile.html">Tope Agboola</a>
-                              </td>
-                              <td>₦500</td>
-                              <td>January 07, 2021 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>4</td>
-                              <td>
-                                <a href="creator-profile.html">Tope Agboola</a>
-                              </td>
-                              <td>₦500</td>
-                              <td>January 07, 2021 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>5</td>
-                              <td>
-                                <a href="creator-profile.html">Tope Agboola</a>
-                              </td>
-                              <td>₦500</td>
-                              <td>January 07, 2021 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>6</td>
-                              <td>
-                                <a href="creator-profile.html">Tope Agboola</a>
-                              </td>
-                              <td>₦500</td>
-                              <td>January 07, 2021 04:22 pm</td>
-                            </tr>
+                            {payout.map((item, index) => {
+                              return (
+                                <tr>
+                                  <td>{index + 1}</td>
+                                  <td>{item.user.brandName}</td>
+                                  <td>₦{item.amount}</td>
+                                  <td>
+                                    {new Date(item.createdAt).toDateString()} at{" "}
+                                    {new Date(
+                                      item.createdAt
+                                    ).toLocaleTimeString()}
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -143,3 +126,12 @@ export default function Payout() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth,
+    data: state.user
+  };
+};
+
+export default connect(mapStateToProps)(Payout);

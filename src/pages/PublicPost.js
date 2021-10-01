@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/common/Footer";
 import Sidebar from "../components/Sidebar";
-export default function PublicPost() {
+import { connect } from "react-redux";
+import { NotificationManager } from "react-notifications";
+import { getAllPosts } from "../utils/apiCalls";
+function PublicPost(props) {
+  const token = props.user.user.token;
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const run = async () => {
+      const result = await getAllPosts(token);
+      let newResult = result.filter((item) => {
+        return item.postType === "public";
+      });
+      console.log(newResult);
+      setPosts(newResult);
+    };
+
+    run();
+    return () => {};
+  }, []);
   return (
     <div>
       <div class="sidebar-dark">
@@ -17,7 +36,7 @@ export default function PublicPost() {
             <div class="page-content">
               <div class="d-flex justify-left align-items-center flex-wrap grid-margin">
                 <div style={{ marginRight: "20px" }}>
-                  <h4 class="mb-3 mb-md-0">Posts</h4>
+                  <h4 class="mb-3 mb-md-0">Public Posts</h4>
                 </div>
               </div>
               <div class="row">
@@ -38,276 +57,40 @@ export default function PublicPost() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
+                            {posts.map((item) => {
+                              return (
+                                <tr>
+                                  <td class="py-1">
+                                    {item.image === null ? (
+                                      "No Image"
+                                    ) : (
+                                      <img src={item.image} alt="image" />
+                                    )}
+                                  </td>
+                                  <td class="question-cell">{item.title}</td>
 
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
+                                  <td>{item.brandName}</td>
+                                  <td>
+                                    {item.postType === "public" ? (
+                                      <span class="badge badge-primary">
+                                        Public
+                                      </span>
+                                    ) : (
+                                      <span class="badge badge-secondary">
+                                        Supporters
+                                      </span>
+                                    )}
+                                  </td>
 
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <a
-                                  class="post-image"
-                                  data-lity
-                                  href="./assets/images/overlay-placeholder.jpg"
-                                >
-                                  <img
-                                    src="./assets/images/overlay-placeholder.jpg"
-                                    alt="image"
-                                  />
-                                </a>
-                              </td>
-                              <td class="question-cell">
-                                <a href="user-article.html">
-                                  2019 Poverty an Inequality in Nigeria.
-                                </a>
-                              </td>
-
-                              <td>
-                                <a href="creator-profile.html">Twyse</a>
-                              </td>
-                              <td>
-                                <span class="badge badge-primary">Public</span>
-                              </td>
-
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
+                                  <td class="date-cell">
+                                    {new Date(item.createdAt).toDateString()} at{" "}
+                                    {new Date(
+                                      item.createdAt
+                                    ).toLocaleTimeString()}
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -324,3 +107,12 @@ export default function PublicPost() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth,
+    data: state.user
+  };
+};
+
+export default connect(mapStateToProps)(PublicPost);

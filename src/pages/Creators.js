@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/common/Footer";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { NotificationManager } from "react-notifications";
+import { getCreators } from "../utils/apiCalls";
 
-export default function Creators() {
+function Creators(props) {
+  const token = props.user.user.token;
+  const [creators, setCreators] = useState([]);
+
+  useEffect(() => {
+    const run = async () => {
+      const result = await getCreators(token);
+      setCreators(result);
+      console.log(result);
+    };
+
+    run();
+    return () => {};
+  }, []);
   return (
     <div>
       <div className="sidebar-dark">
@@ -42,126 +58,29 @@ export default function Creators() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>3</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>4</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>5</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>6</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>7</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>8</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>9</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>10</td>
-                              <td>
-                                <a href="creator-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-primary">Creator</span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
+                            {creators.map((item, index) => {
+                              return (
+                                <tr>
+                                  <td>{index + 1}</td>
+                                  <td>{item.brandName}</td>
+                                  <td>{item.email}</td>
+                                  <td>
+                                    {item.firstName} {item.lastName}
+                                  </td>
+                                  <td>
+                                    <span class="badge badge-primary">
+                                      Creator
+                                    </span>
+                                  </td>
+                                  <td>
+                                    {new Date(item.createdAt).toDateString()} at{" "}
+                                    {new Date(
+                                      item.createdAt
+                                    ).toLocaleTimeString()}
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -178,3 +97,12 @@ export default function Creators() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth,
+    data: state.user
+  };
+};
+
+export default connect(mapStateToProps)(Creators);

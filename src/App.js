@@ -34,7 +34,7 @@ function App(props) {
           <PrivateRoute exact path="/users" component={Users} />
           <PrivateRoute exact path="/creators" component={Creators} />
           <PrivateRoute exact path="/supporters" component={Supporters} />
-          <PrivateRoute exact path="/bocked" component={Blocked} />
+          <PrivateRoute exact path="/blocked" component={Blocked} />
           <PrivateRoute exact path="/posts" component={Posts} />
 
           <PrivateRoute exact path="/posts-public" component={PublicPost} />
@@ -52,7 +52,7 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth,
+    user: state.auth
   };
 };
 

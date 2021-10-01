@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
-import { getCreators } from "../utils/apiCalls";
+import { getCreators, getTotalAmount } from "../utils/apiCalls";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/common/Footer";
+import { Chart } from "react-charts";
 import { useHistory } from "react-router-dom";
 import "../community.css";
 import "../style.css";
@@ -13,11 +14,15 @@ function Dashboard(props) {
   const token = props.user.user.token;
   const [creators, setCreators] = useState([]);
   const [numCreators, setNumCreators] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     const run = async () => {
       const result = await getCreators(token);
       let newCreators = result.slice(0, 10);
+      const result2 = await getTotalAmount(token);
+      console.log(result2);
+      setTotalAmount(result2.amount);
       setCreators(newCreators);
       setNumCreators(result.length);
     };
@@ -63,7 +68,7 @@ function Dashboard(props) {
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-start mb-2">
                       <h6 className="card-title mb-0">Support Transactions</h6>
-                      <h3 className="mb-4">₦899,200</h3>
+                      <h3 className="mb-4">₦{totalAmount}</h3>
                     </div>
 
                     <div className="monthly-sales-chart-wrapper">
@@ -97,146 +102,29 @@ function Dashboard(props) {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>6</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>7</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>8</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>9</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
-                          <tr>
-                            <td>10</td>
-                            <td>
-                              <a href="creator-profile.html">Peter</a>
-                            </td>
-                            <td>example@gmail.com</td>
-                            <td>Peter Atero</td>
-                            <td>
-                              <span className="badge badge-primary">
-                                Creator
-                              </span>
-                            </td>
-                            <td>January 07, 2021; 04:22 pm</td>
-                          </tr>
+                          {creators.map((item, index) => {
+                            return (
+                              <tr>
+                                <td>{index + 1}</td>
+                                <td>{item.brandName}</td>
+                                <td>{item.email}</td>
+                                <td>
+                                  {item.firstName} {item.lastName}
+                                </td>
+                                <td>
+                                  <span className="badge badge-primary">
+                                    Creator
+                                  </span>
+                                </td>
+                                <td>
+                                  {new Date(item.createdAt).toDateString()} at{" "}
+                                  {new Date(
+                                    item.createdAt
+                                  ).toLocaleTimeString()}
+                                </td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>
@@ -254,10 +142,9 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

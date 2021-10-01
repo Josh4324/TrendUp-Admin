@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/common/Footer";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { NotificationManager } from "react-notifications";
+import { getAllSupporters } from "../utils/apiCalls";
 
-export default function Supporters() {
+function Supporters(props) {
+  const token = props.user.user.token;
+  const [supporters, setSupporters] = useState([]);
+
+  useEffect(() => {
+    const run = async () => {
+      const result = await getAllSupporters(token);
+      console.log(result);
+      setSupporters(result.supporters);
+    };
+
+    run();
+    return () => {};
+  }, []);
   return (
     <div>
       <div className="sidebar-dark">
@@ -34,7 +50,6 @@ export default function Supporters() {
                           <thead>
                             <tr>
                               <th class="pt-0">#</th>
-                              <th class="pt-0">Brand Name</th>
                               <th class="pt-0">Email</th>
                               <th class="pt-0">Name</th>
                               <th class="pt-0">User Type</th>
@@ -42,146 +57,28 @@ export default function Supporters() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>3</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>4</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>5</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>6</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>7</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>8</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>9</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
-                            <tr>
-                              <td>10</td>
-                              <td>
-                                <a href="supporter-profile.html">Peter</a>
-                              </td>
-                              <td>example@gmail.com</td>
-                              <td>Peter Atero</td>
-                              <td>
-                                <span class="badge badge-secondary">
-                                  Supporter
-                                </span>
-                              </td>
-                              <td>January 07, 2021; 04:22 pm</td>
-                            </tr>
+                            {supporters.map((item, index) => {
+                              return (
+                                <tr>
+                                  <td>{index + 1}</td>
+                                  <td>{item.email}</td>
+                                  <td>
+                                    {item.firstName} {item.lastName}
+                                  </td>
+                                  <td>
+                                    <span class="badge badge-secondary">
+                                      Supporter
+                                    </span>
+                                  </td>
+                                  <td>
+                                    {new Date(item.createdAt).toDateString()} at{" "}
+                                    {new Date(
+                                      item.createdAt
+                                    ).toLocaleTimeString()}
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -198,3 +95,12 @@ export default function Supporters() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth,
+    data: state.user
+  };
+};
+
+export default connect(mapStateToProps)(Supporters);

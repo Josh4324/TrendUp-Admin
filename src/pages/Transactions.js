@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/common/Footer";
+import { connect } from "react-redux";
+import { NotificationManager } from "react-notifications";
+import { getCreators, getTotalAmount } from "../utils/apiCalls";
 
-export default function Transactions() {
+function Transactions(props) {
+  const token = props.user.user.token;
+  const [transact, setTransact] = useState([]);
+
+  useEffect(() => {
+    const run = async () => {
+      const result = await getTotalAmount(token);
+      console.log(result.payment);
+      setTransact(result.payment);
+    };
+
+    run();
+    return () => {};
+  }, []);
   return (
     <div>
       <div class="sidebar-dark">
@@ -36,162 +52,23 @@ export default function Transactions() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <a href="user.html">Twyse</a>
-                              </td>
-                              <td>
-                                <a href="creator-profile.html">Tope Aremi</a>
-                              </td>
-                              <td>₦2,000</td>
-                              <td class="date-cell">
-                                January 07, 2021; 04:22 pm
-                              </td>
-                            </tr>
+                            {transact.map((item) => {
+                              return (
+                                <tr>
+                                  <td>{item.user.brandName}</td>
+                                  <td>
+                                    {item.firstName} {item.lastName}
+                                  </td>
+                                  <td>₦{item.amount}</td>
+                                  <td class="date-cell">
+                                    {new Date(item.createdAt).toDateString()} at{" "}
+                                    {new Date(
+                                      item.createdAt
+                                    ).toLocaleTimeString()}
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -208,3 +85,12 @@ export default function Transactions() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth,
+    data: state.user
+  };
+};
+
+export default connect(mapStateToProps)(Transactions);
