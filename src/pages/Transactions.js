@@ -55,9 +55,9 @@ function Transactions(props) {
                             {transact.map((item) => {
                               return (
                                 <tr>
-                                  <td>{item.user.brandName}</td>
+                                  <td>{item.user?.brandName}</td>
                                   <td>
-                                    {item.firstName} {item.lastName}
+                                    {item?.firstName} {item?.lastName}
                                   </td>
                                   <td>₦{item.amount}</td>
                                   <td class="date-cell">
@@ -89,7 +89,7 @@ function Transactions(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user
+    data: state.user,
   };
 };
 

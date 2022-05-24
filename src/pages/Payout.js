@@ -99,8 +99,8 @@ function Payout(props) {
                               return (
                                 <tr>
                                   <td>{index + 1}</td>
-                                  <td>{item.user.brandName}</td>
-                                  <td>₦{item.amount}</td>
+                                  <td>{item?.user?.brandName}</td>
+                                  <td>₦{item?.amount}</td>
                                   <td>
                                     {new Date(item.createdAt).toDateString()} at{" "}
                                     {new Date(
@@ -130,7 +130,7 @@ function Payout(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user
+    data: state.user,
   };
 };
 

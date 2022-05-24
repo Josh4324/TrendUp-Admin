@@ -23,10 +23,10 @@ function Sidebar(props) {
         <div className="sidebar-body">
           <ul className="nav">
             <li className="nav-item active">
-              <a href="/" className="nav-link">
+              <NavLink to="/" className="nav-link">
                 <i className="link-icon" data-feather="box"></i>
                 <span className="link-title">Dashboard</span>
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item nav-category">Main</li>
             <li className="nav-item">
@@ -45,24 +45,24 @@ function Sidebar(props) {
               <div className="collapse" id="users">
                 <ul className="nav sub-menu">
                   <li className="nav-item">
-                    <a href="/users" className="nav-link">
+                    <NavLink to="/users" className="nav-link">
                       All Users
-                    </a>
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a href="/creators" className="nav-link">
+                    <NavLink to="/creators" className="nav-link">
                       Creators
-                    </a>
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a href="/supporters" className="nav-link">
+                    <NavLink to="/supporters" className="nav-link">
                       Supporters
-                    </a>
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a href="/blocked" className="nav-link">
+                    <NavLink to="/blocked" className="nav-link">
                       Blocked Users
-                    </a>
+                    </NavLink>
                   </li>
                 </ul>
               </div>
@@ -83,24 +83,24 @@ function Sidebar(props) {
               <div className="collapse" id="articlesNav">
                 <ul className="nav sub-menu">
                   <li className="nav-item">
-                    <a href="/posts" className="nav-link">
+                    <NavLink to="/posts" className="nav-link">
                       All Posts
-                    </a>
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a href="/posts-public" className="nav-link">
+                    <NavLink to="/posts-public" className="nav-link">
                       Public Posts
-                    </a>
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a href="posts-private" className="nav-link">
+                    <NavLink to="/posts-private" className="nav-link">
                       Private Posts
-                    </a>
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a href="posts-deleted" className="nav-link">
+                    <NavLink to="/posts-deleted" className="nav-link">
                       Deleted Posts
-                    </a>
+                    </NavLink>
                   </li>
                 </ul>
               </div>
@@ -108,16 +108,16 @@ function Sidebar(props) {
 
             <li className="nav-item nav-category">Finance</li>
             <li className="nav-item">
-              <a href="/transactions" className="nav-link">
+              <NavLink to="/transactions" className="nav-link">
                 <i className="link-icon" data-feather="trending-up"></i>
                 <span className="link-title">Transactions</span>
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a href="/payout" className="nav-link">
+              <NavLink to="/payout" className="nav-link">
                 <i className="link-icon" data-feather="arrow-up-right"></i>
                 <span className="link-title">Payout</span>
-              </a>
+              </NavLink>
             </li>
 
             <li className="nav-item nav-category">Account</li>
